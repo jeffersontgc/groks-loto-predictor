@@ -44,7 +44,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden bg-gray-50">
-        <div className="h-full overflow-y-auto p-4">{children}</div>
+        <div className="h-full overflow-y-auto">{children}</div>
       </div>
     </div>
   );
