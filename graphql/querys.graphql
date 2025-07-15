@@ -1,0 +1,53 @@
+query SorteoByUuid($uuid: String!) {
+  sorteoByUuid(uuid: $uuid) {
+    id
+    uuid
+    drawDate
+    drawTime
+    drawNumber
+    winningNumber
+    multiplier
+    multiplierValue
+  }
+}
+
+query GetSorteos {
+  sorteos {
+    id
+    uuid
+    drawDate
+    drawTime
+    drawNumber
+    winningNumber
+    multiplier
+    multiplierValue
+  }
+}
+
+query SuggestNumbers($drawDate: String!) {
+  suggestNumbers(drawDate: $drawDate) {
+    status
+    numbers
+    message
+    metrics {
+      aiMetrics {
+        source
+        hitRate
+        hits
+        totalSuggested
+      }
+      grokMetrics {
+        source
+        hitRate
+        hits
+        totalSuggested
+      }
+      crossMetrics {
+        source
+        hitRate
+        hits
+        totalSuggested
+      }
+    }
+  }
+}

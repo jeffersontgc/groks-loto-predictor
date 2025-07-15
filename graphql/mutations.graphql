@@ -1,0 +1,17 @@
+mutation CreateSorteo($args: CreateSorteoInput!) {
+  createSorteo(args: $args) {
+    status
+  }
+}
+
+mutation UpdateSorteo($args: UpdateSorteoInput!) {
+  updateSorteo(args: $args) {
+    status
+  }
+}
+
+mutation DeleteSorteo($uuid: String!) {
+  deleteSorteo(uuid: $uuid) {
+    status
+  }
+}

@@ -23,4 +23,51 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Matrix Numbers Animation */
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-20vh);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
+}
+
+.floating-numbers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.matrix-number {
+  position: absolute;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.matrix-number:hover {
+  transform: scale(1.2);
+  opacity: 1 !important;
 }
