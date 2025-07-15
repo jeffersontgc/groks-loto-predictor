@@ -16,6 +16,8 @@ const SorteosPage = () => {
 
   const env = process.env.ENVIROMENT;
 
+  console.log("env", env);
+
   return (
     <div className="h-full w-full p-6">
       {/* Header con botón */}
