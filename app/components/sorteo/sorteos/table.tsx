@@ -1,15 +1,12 @@
 import React from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Sorteo } from "@/graphql/generated/schema";
 
 interface TableSorteoProps {
   sorteos: Sorteo[];
-  handleDelete: (uuid: string) => void;
 }
 
 const TableSorteo: React.FC<TableSorteoProps> = ({
   sorteos,
-  handleDelete,
 }: TableSorteoProps) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -26,7 +23,6 @@ const TableSorteo: React.FC<TableSorteoProps> = ({
                 Multiplicador
               </th>
               <th className="px-6 py-4 text-left font-semibold">MAS 1</th>
-              <th className="px-6 py-4 text-center font-semibold">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -44,19 +40,6 @@ const TableSorteo: React.FC<TableSorteoProps> = ({
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md font-semibold">
                     {sorteo.multiplierValue}
                   </span>
-                </td>
-                <td className="px-6 py-4 text-center">
-                  <div className="flex justify-center gap-2">
-                    <button className="text-gray-600 hover:text-gray-800 p-1 cursor-pointer hover:scale-110 transition-transform">
-                      <FiEdit className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(sorteo.uuid)}
-                      className="text-gray-600 hover:text-red-600 p-1 cursor-pointer hover:scale-110 transition-transform"
-                    >
-                      <FiTrash2 className="w-4 h-4" />
-                    </button>
-                  </div>
                 </td>
               </tr>
             ))}
