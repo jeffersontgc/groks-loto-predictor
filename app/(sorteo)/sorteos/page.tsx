@@ -14,7 +14,7 @@ const SorteosPage = () => {
 
   const sorteos = data?.sorteos || [];
 
-  const env = process.env.ENVIROMENT;
+  const env = process.env.NEXT_PUBLIC_ENVIROMENT;
 
   console.log("env", env);
 
