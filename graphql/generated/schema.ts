@@ -78,6 +78,7 @@ export type QuerySorteoByUuidArgs = {
 
 export type QuerySuggestNumbersArgs = {
   drawDate: Scalars['String']['input'];
+  drawTime: Scalars['String']['input'];
 };
 
 export type Sorteo = {
@@ -150,6 +151,7 @@ export type GetSorteosQuery = { __typename?: 'Query', sorteos: Array<{ __typenam
 
 export type SuggestNumbersQueryVariables = Exact<{
   drawDate: Scalars['String']['input'];
+  drawTime: Scalars['String']['input'];
 }>;
 
 
@@ -349,8 +351,8 @@ export type GetSorteosLazyQueryHookResult = ReturnType<typeof useGetSorteosLazyQ
 export type GetSorteosSuspenseQueryHookResult = ReturnType<typeof useGetSorteosSuspenseQuery>;
 export type GetSorteosQueryResult = Apollo.QueryResult<GetSorteosQuery, GetSorteosQueryVariables>;
 export const SuggestNumbersDocument = gql`
-    query SuggestNumbers($drawDate: String!) {
-  suggestNumbers(drawDate: $drawDate) {
+    query SuggestNumbers($drawDate: String!, $drawTime: String!) {
+  suggestNumbers(drawDate: $drawDate, drawTime: $drawTime) {
     status
     numbers
     message
@@ -391,6 +393,7 @@ export const SuggestNumbersDocument = gql`
  * const { data, loading, error } = useSuggestNumbersQuery({
  *   variables: {
  *      drawDate: // value for 'drawDate'
+ *      drawTime: // value for 'drawTime'
  *   },
  * });
  */

@@ -24,8 +24,8 @@ query GetSorteos {
   }
 }
 
-query SuggestNumbers($drawDate: String!) {
-  suggestNumbers(drawDate: $drawDate) {
+query SuggestNumbers($drawDate: String!, $drawTime: String!) {
+  suggestNumbers(drawDate: $drawDate, drawTime: $drawTime) {
     status
     numbers
     message

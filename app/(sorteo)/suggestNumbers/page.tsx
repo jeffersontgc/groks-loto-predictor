@@ -6,6 +6,7 @@ import { useSuggestNumbersLazyQuery } from "@/graphql/generated/schema";
 
 const SuggestNumbers: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedTime, setSelectedTime] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
   const [getSuggestions, { data, error }] = useSuggestNumbersLazyQuery();
@@ -17,16 +18,40 @@ const SuggestNumbers: React.FC = () => {
       setSelectedDate(
         `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${year}`
       );
+      // Reset time if date changes
+      setSelectedTime("");
     } else {
       setSelectedDate("");
+      setSelectedTime("");
     }
   };
 
+  // Determinar si la fecha seleccionada es sábado
+  const isSaturday = (() => {
+    if (!selectedDate) return false;
+    const [day, month, year] = selectedDate.split("/").map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.getDay() === 6;
+  })();
+
+  const timeOptions = [
+    { value: "11:00 AM", label: "11:00 AM" },
+    { value: "3:00 PM", label: "3:00 PM" },
+    { value: "6:00 PM", label: "6:00 PM", disabled: !isSaturday },
+    { value: "9:00 PM", label: "9:00 PM" },
+  ];
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTime(e.target.value);
+  };
+
   const handleGetSuggestions = async () => {
-    if (!selectedDate) return;
+    if (!selectedDate || !selectedTime) return;
     setIsLoading(true);
     try {
-      await getSuggestions({ variables: { drawDate: selectedDate } });
+      await getSuggestions({
+        variables: { drawDate: selectedDate, drawTime: selectedTime },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -152,7 +177,7 @@ const SuggestNumbers: React.FC = () => {
           <div className="flex items-center gap-3 mb-4">
             <FiCalendar className="text-2xl text-purple-600" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Selecciona la Fecha del Sorteo
+              Selecciona la Fecha y Hora del Sorteo
             </h2>
           </div>
 
@@ -169,10 +194,31 @@ const SuggestNumbers: React.FC = () => {
                 max="2030-12-31"
               />
             </div>
-
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Horario del Sorteo
+              </label>
+              <select
+                value={selectedTime}
+                onChange={handleTimeChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                disabled={!selectedDate}
+              >
+                <option value="">Selecciona un horario</option>
+                {timeOptions.map((option) => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    disabled={option.disabled}
+                  >
+                    {option.label} {option.disabled ? "(Solo Sábado)" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               onClick={handleGetSuggestions}
-              disabled={!selectedDate || isLoading}
+              disabled={!selectedDate || !selectedTime || isLoading}
               className="bg-gradient-to-r from-purple-600 cursor-pointer to-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-2"
             >
               {isLoading ? (
